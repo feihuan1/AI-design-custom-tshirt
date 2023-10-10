@@ -24,6 +24,8 @@ const CameraRig = ({ children }) => {
       else targetposition = [0, 0, 2];
     }
 
+    //set camera position
+    easing.damp3(state.camera.position, targetposition, 0.25, delta)
     // set smooth shirt rotation
     easing.dampE(
       group.current.rotation,

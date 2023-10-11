@@ -1,3 +1,5 @@
+//chatGpt help made these functions 
+
 export const downloadCanvasToImage = () => {
   const canvas = document.querySelector("canvas");
   const dataURL = canvas.toDataURL();

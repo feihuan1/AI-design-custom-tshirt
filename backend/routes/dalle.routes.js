@@ -17,4 +17,30 @@ router.route('/').get((req,res) => {
     res.status(200).json({ message: "hello from ROUTES"  })
 })
 
+router.route('/').post( async (req,res) => {
+    try {
+        const {prompt} = req.body
+    
+    // get ai response with image with a openai function based on a given prompt
+
+    const response = await openai.createImage({
+        prompt,
+        n: 1,//number of image
+        size:'1024x1024',
+        response_format:'b64_json'
+    })
+
+    //path to image
+    const image = response.data.data[0].b64_json
+
+    //pass is to frontend with res
+    res.status(200).json({ photo: image })
+        
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({message: "something went wrong"})
+    }
+})
+
+
 export default router

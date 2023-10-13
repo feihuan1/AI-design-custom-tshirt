@@ -17,4 +17,6 @@
 7. framer-motion : react animation
 8. tailwincss : styling
 
+# live demo
+https://sensational-baklava-7b85b6.netlify.app/
 

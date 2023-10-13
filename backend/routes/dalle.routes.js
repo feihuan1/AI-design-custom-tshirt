@@ -1,46 +1,39 @@
-import express from "express";
-import * as dotenv from 'dotenv'
-import { Configuration, OpenAIApi } from 'openai';
+import express from 'express';
+import * as dotenv from 'dotenv';
+import { Configuration, OpenAIApi} from 'openai';
 
 dotenv.config();
 
+const router = express.Router();
 
-const router = express.Router()
-//migrate!!--------
 const config = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-})
-const openai = new OpenAIApi(config)
-//------------
+  apiKey: "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",
+});
 
-router.route('/').get((req,res) => {
-    res.status(200).json({ message: "hello from ROUTES"  })
+const openai = new OpenAIApi(config);
+
+router.route('/').get((req, res) => {
+  res.status(200).json({ message: "Hello from DALL.E ROUTES" })
 })
 
-router.route('/').post( async (req,res) => {
-    try {
-        const {prompt} = req.body
-    
-    // get ai response with image with a openai function based on a given prompt
+router.route('/').post(async (req, res) => {
+  try {
+    const { prompt } = req.body;
 
     const response = await openai.createImage({
-        prompt,
-        n: 1,//number of image
-        size:'1024x1024',
-        response_format:'b64_json'
-    })
+      prompt,
+      n: 1,
+      size: '1024x1024',
+      response_format: 'b64_json'
+    });
 
-    //path to image
-    const image = response.data.data[0].b64_json
+    const image = response.data.data[0].b64_json;
 
-    //pass is to frontend with res
-    res.status(200).json({ photo: image })
-        
-    } catch (error) {
-        console.error(error)
-        res.status(500).json({message: "something went wrong"})
-    }
+    res.status(200).json({ photo: image });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Something went wrong" })
+  }
 })
 
-
-export default router
+export default router;
